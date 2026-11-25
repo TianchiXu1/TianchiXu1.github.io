@@ -72,3 +72,21 @@ if (rainAnimation) {
   });
   autoplay.observe(rainAnimation);
 }
+
+const honorsFilter = document.querySelector('.honors-filter');
+if (honorsFilter) {
+  const buttons = honorsFilter.querySelectorAll('button');
+  const heading = document.getElementById('honors-title');
+  const entries = document.querySelectorAll('#honors-list [data-honors-only]');
+  function showHonors(view) {
+    heading.textContent = view === 'selected' ? 'Selected Honors' : 'Honors and Awards';
+    for (const button of buttons) {
+      button.setAttribute('aria-pressed', String(button.dataset.honorsView === view));
+    }
+    for (const entry of entries) entry.hidden = entry.dataset.honorsOnly !== view;
+  }
+
+  for (const button of buttons) button.addEventListener('click', () => showHonors(button.dataset.honorsView));
+  showHonors('selected');
+  honorsFilter.hidden = false;
+}
